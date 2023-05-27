@@ -32,13 +32,13 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["123", "123", "123", "123", "123", "123", "123", "123", "123", "123"],
+    labels: [],
     datasets: [{
       label: "Unidades",
-      backgroundColor: "#4e73df",
+      backgroundColor: ["#4e73df", "#22CBE9","#4e73df", "#22CBE9","#4e73df", "#22CBE9","#4e73df", "#22CBE9","#4e73df", "#22CBE9"],
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984, 14984, 14984, 14984, 14984, 14984],
+      data: [],
     }],
   },
   options: {
@@ -56,16 +56,12 @@ var myBarChart = new Chart(ctx, {
         gridLines: {
           display: false,
           drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 6
-        },
-        maxBarThickness: 25,
+        }
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 15000,
+          max: 10000,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
@@ -106,3 +102,20 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+
+fetch('https://localhost:7234/api/Top10')
+  .then(response => response.json())
+  .then(data => {
+    // Actualizar los datos del gráfico
+    myBarChart.data.labels = data.map(item => "ID" + item.id);
+    myBarChart.data.datasets[0].data = data.map(item => item.cantidad);
+
+    // Establecer el valor máximo del eje y al número de unidades del producto más vendido
+    var maxUnits = Math.max(...data.map(item => item.cantidad));
+    myBarChart.options.scales.yAxes[0].ticks.max = maxUnits;
+
+    myBarChart.update();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -13,6 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -277,15 +278,29 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Ordenes Totales</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="apiOrdenesTotales"></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fa fa-tags fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <script>
+                                console.log('Ejecutando código para obtener datos de la API');
+                                fetch('https://localhost:7234/api/OrdenesTotales')
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                    var totalOrdersDiv = document.getElementById('apiOrdenesTotales');
+                                    totalOrdersDiv.textContent = data[0].numeroOrdenes;
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        </script>
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -295,7 +310,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Ingresos Totales</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="apiIngresosTotales"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -304,6 +319,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <script>
+                            console.log('Ejecutando código para obtener datos de la API');
+                            fetch('https://localhost:7234/api/IngresosTotales')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                var IngresosTotalesDiv = document.getElementById('apiIngresosTotales');
+                                IngresosTotalesDiv.textContent = "$" + data[0].totalAcumulado;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        </script>
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -315,7 +344,7 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="apiProductosRegistrados"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -326,6 +355,20 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <script>
+                            console.log('Ejecutando código para obtener datos de la API');
+                                fetch('https://localhost:7234/api/ProductosRegistrados')
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                    var producRegisDiv = document.getElementById('apiProductosRegistrados');
+                                    producRegisDiv.textContent = data[0].numeroProductos;
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        </script>
 
                         <!-- Pending Requests Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -335,15 +378,29 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Producto top #1</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="apiProductoTop1"></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fa fa-trophy fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <script>
+                            console.log('Ejecutando código para obtener datos de la API');
+                                fetch('https://localhost:7234/api/Top1')
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                    var produc1Div = document.getElementById('apiProductoTop1');
+                                    produc1Div.textContent = data[0].nombre;
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        </script>
                     </div>
 
                     <!-- Content Row -->
@@ -356,7 +413,10 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Top 10 Productos</h6>
+                                    <h6 class="m-0 font-weight-bold text-dark">Top 10 Unidades/Productos</h6>
+                                    <div class="col-auto">
+                                        <i class="fa fa-signal fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
                                 <!-- Card Body Grafico principal-->
                                 <div class="card-body">
@@ -374,26 +434,46 @@
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-dark">Top 3 Ingresos/Producto</h6>
+                                    <div class="col-auto">
+                                        <i class="fa fa-pie-chart fa-2x text-gray-300 placeholder"></i>
+                                    </div>
                                 </div>
                                 <!-- Card Body Grafico Secundario-->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
+                                    <div class="chart-pie pt-4 pb-2" style="align-items: center; display: flex; justify-content: center; ">
                                         <canvas id="myPieChart"></canvas>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> 123
+                                            <i class="fas fa-circle text-primary placeholder" id="Top3Num1"></i> 
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> 124
+                                            <i class="fas fa-circle text-success placeholder" id="Top3Num2"></i> 
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> 125
+                                            <i class="fas fa-circle text-info placeholder" id="Top3Num3"></i> 
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            console.log('Ejecutando código para obtener datos de la API');
+                                fetch('https://localhost:7234/api/Top3')
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                    var Top1Span = document.getElementById('Top3Num1');
+                                    var Top2Span = document.getElementById('Top3Num2');
+                                    var Top3Span = document.getElementById('Top3Num3');
+                                    Top1Span.textContent = "ID " + data[0].id;
+                                    Top2Span.textContent = "ID " + data[1].id;
+                                    Top3Span.textContent = "ID " + data[2].id;
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        </script>
                     </div>
 
                     <!-- Content Row -->
@@ -404,8 +484,12 @@
 
                             <!-- Project Card Example Barras de porcentajes-->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
+                                <div class="card-header py-3"  style="display: flex; justify-content: space-between;">
                                     <h6 class="m-0 font-weight-bold text-dark">Nombres Top 10 por ID</h6>
+                                    <div class="col-auto">
+                                        <i class="fa fa-list-ol fa-2x text-gray-300"></i>
+                                    </div>
+                                    
                                 </div>
                                 <div class="card-body">
                                     <table class="table">
@@ -419,62 +503,130 @@
                                         <tbody>
                                           <tr>
                                             <th scope="row">1</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n1"></td>
+                                            <td id="NameTop10n1">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">2</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n2"></td>
+                                            <td id="NameTop10n2">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">3</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n3"></td>
+                                            <td id="NameTop10n3">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">4</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n4"></td>
+                                            <td id="NameTop10n4">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">5</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n5"></td>
+                                            <td id="NameTop10n5">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">6</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n6"></td>
+                                            <td id="NameTop10n6">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">7</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n7"></td>
+                                            <td id="NameTop10n7">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">8</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n8"></td>
+                                            <td id="NameTop10n8">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">9</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n9"></td>
+                                            <td id="NameTop10n9">---</td>
                                           </tr>
                                           <tr>
                                             <th scope="row">10</th>
-                                            <td>123</td>
-                                            <td>Mamahuevo</td>
+                                            <td id="idTop10n10"></td>
+                                            <td id="NameTop10n10">---</td>
                                           </tr>
                                         </tbody>
                                       </table>
                                 </div>
+
+                                <script>
+                                    console.log('Ejecutando código para obtener datos de la API');
+                                    fetch('https://localhost:7234/api/Top10')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Actualizar el contenido de la tabla
+                                        for (let i = 0; i < 10; i++) {
+                                        let item = data[i];
+                                        document.querySelector('#idTop10n' + (i + 1)).textContent = item.id;
+                                        document.querySelector('#NameTop10n' + (i + 1)).textContent = item.nombre;
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                </script>
                             </div>
+                        </div>
+                        
+
+                        <div class="col-lg-6 mb-4">
+
+                            <!-- Illustrations -->
+                            <div class="card shadow mb-4" style="height: 666px;">
+                                <div class="card-header py-3"  style="display: flex; justify-content: space-between;">
+                                    <h6 class="m-0 font-weight-bold text-dark">Ilustracion del top 1</h6>
+                                    <div class="col-auto">
+                                        <i class="fas fa-award fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                                            src="img/ChecoPerezMejorTop1.webp" alt="...">
+                                            <h5 class="mb-0 font-weight-bold text-gray-800 placeholder-glow" id="apiNameTop1"></h5> 
+                                    </div>
+                                </div>
+                                <script>
+                                    console.log('Ejecutando código para obtener datos de la API');
+                                    fetch('https://localhost:7234/api/Top1')
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Actualizar el contenido del elemento <div> con el valor devuelto por la API
+                                        var produc1Div = document.getElementById('apiNameTop1');
+                                        produc1Div.textContent = data[0].nombre;
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                                </script>
+                            </div>
+
+                            
+                        </div>
+
+                        
+
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-6 mb-4">
+
                             <!-- Creditos -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-dark">Creditos</h6>
+                                <div class="card-header py-3"  style="display: flex; justify-content: space-between;">
+                                    <h6 class="m-0 font-weight-bold text-dark">Creditos Grupo 3-3</h6>
+                                    <div class="col-auto">
+                                        <i class="	fas fa-glass-cheers fa-2x text-gray-300"></i>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <table class="table">
@@ -503,25 +655,45 @@
                                       </table>
                                 </div>
                             </div>
+
                         </div>
 
-                        <div class="col-lg-6 mb-4">
-
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-dark">Illustration of top 1</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center" style="margin-bottom: 160px;">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/ChecoPerezMejorTop1.webp" alt="...">
+                        <div class="col-lg-6 mb-4" >
+                            <!-- Creditos -->
+                            <div class="card shadow mb-4" style="height: 430px;">
+                                <div class="card-header py-3"  style="display: flex; justify-content: space-between;">
+                                    <h6 class="m-0 font-weight-bold text-dark">Materias</h6>
+                                    <div class="col-auto">
+                                        <i class="	fas fa-glass-cheers fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
-                            </div>
-
-                            
-
+                                <div class="card-body" style="display: flex; flex-direction: column; justify-content: center;">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th class="text-success font-weight-bold text-center" style="font-size: 23px;">Sistemas de Información</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody class="text-dark font-weight-bold">
+                                          <tr>
+                                            <td>-Alexis Moises Montaño Araujo</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th class="text-success font-weight-bold text-center" style="font-size: 23px;">Programación de Servidores Web</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody class="text-dark font-weight-bold">
+                                          <tr>
+                                            <td>-José Manuel Cazarez Alderete</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> 
                         </div>
                     </div>
 
@@ -535,7 +707,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; La FIC 2023</span>
+                        <span>Copyright &copy;FIC 2023</span>
                     </div>
                 </div>
             </footer>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -257,23 +257,78 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="display: flex; flex-direction: column; align-items: center;">
 
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
                             <div
                                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-dark">Top 10 Productos</h6>
+                                <h6 class="m-0 font-weight-bold text-dark">Sales.SalesOrderHeader</h6>
                             </div>
-                            <!-- Card Body Grafico principal-->
+                            <!-- Card Body Tabla principal-->
                             <div class="card-body">
-                                <div class="chart-bar">
-                                    <canvas id="myBarChart"></canvas>
-                                </div>
+                                <div id="table-container"></div>
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        fetch('https://localhost:7234/api/OrderHeader')
+                        .then(response => response.json())
+                        .then(data => {
+                            // Crear la tabla
+                            let table = document.createElement('table');
+                            table.classList.add('table');
+
+                            // Crear el encabezado de la tabla
+                            let thead = document.createElement('thead');
+                            thead.classList.add('table-header');
+                            let tr = document.createElement('tr');
+                            for (let key in data[0]) {
+                            let th = document.createElement('th');
+                            th.textContent = key;
+                            tr.appendChild(th);
+                            }
+                            thead.appendChild(tr);
+                            table.appendChild(thead);
+
+                            // Crear el cuerpo de la tabla
+                            let tbody = document.createElement('tbody');
+                            for (let row of data) {
+                            let tr = document.createElement('tr');
+                            for (let key in row) {
+                                let td = document.createElement('td');
+                                td.textContent = row[key] === null ? '- - -' : row[key];;
+                                tr.appendChild(td);
+                            }
+                            tbody.appendChild(tr);
+                            }
+                            table.appendChild(tbody);
+
+                            // Agregar la tabla al contenedor
+                            let container = document.querySelector('#table-container');
+                            container.innerHTML = '';
+                            container.appendChild(table);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+
+                    </script>
+                    <style>
+                        .table-header{
+                            font-weight: bold;
+                            background-color: lightblue;
+                            color: black;
+                        }
+
+                        @media (max-width: 650px){
+                            body{
+                                width: 649px;
+                            }
+                        }
+                    </style>
                 </div>
                 <!-- /.container-fluid -->
 

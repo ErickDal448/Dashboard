@@ -7,9 +7,8 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["123", "124", "125"],
+    labels: [],
     datasets: [{
-      data: [51229.44, 28654.16, 165406.61],
       backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
       hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
@@ -26,11 +25,30 @@ var myPieChart = new Chart(ctx, {
       yPadding: 15,
       displayColors: false,
       caretPadding: 10,
+      callbacks: {
+        label: function(tooltipItem, data) {
+          var label = data.labels[tooltipItem.index];
+          var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          return label + ': $' + value;
+        }
+      }
     },
     legend: {
       display: false
     },
-    cutoutPercentage: 80,
+    cutoutPercentage: 0,
   },
 });
 
+fetch('https://localhost:7234/api/Top3')
+  .then(response => response.json())
+  .then(data => {
+    // Actualizar los datos del gráfico
+    myPieChart.data.labels = data.map(item => "ID" + item.id);
+    myPieChart.data.datasets[0].data = data.map(item => item.cantidad);
+
+    myPieChart.update();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
